@@ -1,7 +1,11 @@
 package fr.doubi.elearning.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.doubi.elearning.security.oauth2.user.AuthProvider;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,19 +32,33 @@ public class User implements OAuth2User, UserDetails {
     private Long id;
 
     @Column(unique = true)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email is invalid")
     private String email;
 
+    @NotBlank(message = "First name is required")
     private String firstname;
+
+    @NotBlank(message = "Last name is required")
     private String lastname;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Password is required")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter and one number")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private AuthProvider provider;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String providerId;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Column(columnDefinition = "varchar(255) default 'STUDENT'")
+    private Role role = Role.STUDENT;
 
     @Override
     public Map<String, Object> getAttributes() {

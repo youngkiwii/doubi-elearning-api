@@ -3,7 +3,7 @@ package fr.doubi.elearning.controller;
 import fr.doubi.elearning.dto.AuthenticationResponse;
 import fr.doubi.elearning.dto.LoginRequest;
 import fr.doubi.elearning.dto.RefreshTokenRequest;
-import fr.doubi.elearning.dto.RegisterRequest;
+import fr.doubi.elearning.model.User;
 import fr.doubi.elearning.repository.UserRepository;
 import fr.doubi.elearning.security.CurrentUser;
 import fr.doubi.elearning.service.AuthenticationService;
@@ -22,7 +22,7 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody User request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 

@@ -18,11 +18,9 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Optional;
-import java.util.Random;
 
 @Slf4j
 @Service
@@ -64,7 +62,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user = userOptional.get();
         } else {
             SecureRandom random = new SecureRandom();
-            byte[] bytes = new byte[16];
+            byte[] bytes = new byte[32];
             random.nextBytes(bytes);
             String generatedString = new String(bytes, StandardCharsets.UTF_8);
 

@@ -3,7 +3,6 @@ package fr.doubi.elearning.service;
 import fr.doubi.elearning.dto.AuthenticationResponse;
 import fr.doubi.elearning.dto.LoginRequest;
 import fr.doubi.elearning.dto.RefreshTokenRequest;
-import fr.doubi.elearning.dto.RegisterRequest;
 import fr.doubi.elearning.model.RefreshToken;
 import fr.doubi.elearning.model.Role;
 import fr.doubi.elearning.model.User;
@@ -29,7 +28,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(User request) {
         User user = User.builder()
                 .email(request.getEmail())
                 .firstname(request.getFirstname())
