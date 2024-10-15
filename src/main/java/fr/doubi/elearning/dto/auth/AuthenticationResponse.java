@@ -1,4 +1,4 @@
-package fr.doubi.elearning.dto;
+package fr.doubi.elearning.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -11,6 +11,15 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    host: 127.0.0.1
+    port: 1025
+    username: noreply@doubi.fr
+    properties:
+      smtp:
+        auth: false
+        starttls:
+          enable: false
   security:
     oauth2:
       client:

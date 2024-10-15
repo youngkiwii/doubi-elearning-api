@@ -3,6 +3,7 @@ package fr.doubi.elearning.security;
 import fr.doubi.elearning.model.RefreshToken;
 import fr.doubi.elearning.model.User;
 import fr.doubi.elearning.repository.RefreshTokenRepository;
+import fr.doubi.elearning.util.RandomUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -73,17 +74,10 @@ public class TokenService {
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[64];
-        random.nextBytes(bytes);
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : bytes) {
-            hexString.append(String.format("%02x", b));
-        }
-
+        String token = RandomUtils.generateRandomString(32);
         RefreshToken refreshToken = RefreshToken.builder()
                 .username(userDetails.getUsername())
-                .token(hexString.toString())
+                .token(token)
                 .expiryDate(Instant.now().plusMillis(refreshTokenExpiration))
                 .build();
         refreshTokenRepository.save(refreshToken);

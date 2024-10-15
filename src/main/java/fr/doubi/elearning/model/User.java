@@ -15,7 +15,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +34,7 @@ public class User implements OAuth2User, UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @NotBlank(message = "Email is required")
     @Email(message = "Email is invalid")
     private String email;
@@ -60,6 +63,12 @@ public class User implements OAuth2User, UserDetails {
     @Column(columnDefinition = "varchar(255) default 'STUDENT'")
     private Role role = Role.STUDENT;
 
+    private String emailVerificationToken;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     @Override
     public Map<String, Object> getAttributes() {
         return Map.of();
@@ -78,5 +87,10 @@ public class User implements OAuth2User, UserDetails {
     @Override
     public String getName() {
         return email;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.emailVerificationToken == null;
     }
 }
